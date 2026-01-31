@@ -6,7 +6,6 @@
 export { useDateTimeService } from "./useDateTimeService";
 export { useUtilService } from "./useUtilService";
 export { useIconService } from "./useIconService";
-export { useLottieService } from "./useLottieService";
 export { usePageTitleService } from "./usePageTitleService";
 export { useQueryParamService } from "./useQueryParamService";
 export { useStorageService } from "./useStorageService";

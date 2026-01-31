@@ -7,7 +7,6 @@
 export { useUtilService as UtilService } from "./src/composables/useUtilService";
 export { useDateTimeService as DateTimeService } from "./src/composables/useDateTimeService";
 export { useIconService as IconService } from "./src/composables/useIconService";
-export { useLottieService as LottieService } from "./src/composables/useLottieService";
 export { usePageTitleService as PageTitleService } from "./src/composables/usePageTitleService";
 export { useQueryParamService as QueryParamService } from "./src/composables/useQueryParamService";
 export { useStorageService as StorageService } from "./src/composables/useStorageService";
@@ -18,7 +17,9 @@ export { useFilterService as FilterService } from "./src/composables/useFilterSe
 import type { App } from "vue";
 
 const Ns8UiLibNew = {
-  install(app: App) {},
+  install(app: App) {
+    // No pictograms - using Lucide icons instead
+  }
 };
 
 export default Ns8UiLibNew;

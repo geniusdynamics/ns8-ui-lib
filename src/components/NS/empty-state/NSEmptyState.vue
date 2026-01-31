@@ -8,7 +8,8 @@ interface Props {
   title?: string
   description?: string
   icon?: string | object
-  animationData?: any
+  lottiePath?: string // Path to Lottie JSON file
+  lottieData?: any // Direct Lottie animation data
   animationTitle?: string
   size?: 'default' | 'sm' | 'lg'
   variant?: 'default' | 'muted'
@@ -136,22 +137,15 @@ const hasActionsSlot = computed(() => !!$slots.actions)
       <slot name="icon">
         <!-- Lottie animation if provided -->
         <NSLottieAnimation
-          v-if="animationData || props.animation"
-          :animation="props.animation"
-          :data="animationData"
+          v-if="lottiePath || lottieData"
+          :path="lottiePath"
+          :animation-data="lottieData"
           :width="48"
           :height="48"
           :class="iconClasses"
           :title="animationTitle || title"
           :play-on-hover="true"
           :stop-on-hover-out="true"
-        />
-        
-        <!-- Custom icon or default Lucide icon -->
-        <component
-          v-else-if="iconComponent && !hasIconSlot && !animationData && !props.animation"
-          :is="iconComponent"
-          :class="iconClasses"
         />
         
         <!-- Custom icon or default Lucide icon -->
