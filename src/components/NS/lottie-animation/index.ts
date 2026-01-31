@@ -1,0 +1,1 @@
+export { default as NSLottieAnimation } from './NSLottieAnimation.vue'

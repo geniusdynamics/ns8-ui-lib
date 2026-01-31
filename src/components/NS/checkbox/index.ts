@@ -1,0 +1,1 @@
+export { default as NSCheckbox } from './NSCheckbox.vue'

@@ -1,0 +1,1 @@
+export { default as NSDataTable } from './NSDataTable.vue'

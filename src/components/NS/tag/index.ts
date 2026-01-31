@@ -1,0 +1,1 @@
+export { default as NSTag } from './NSTag.vue'

@@ -1,0 +1,1 @@
+export { default as NSEmptyState } from './NSEmptyState.vue'

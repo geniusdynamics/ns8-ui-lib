@@ -1,0 +1,1 @@
+export { default as NSPagination } from './NSPagination.vue'
