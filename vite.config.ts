@@ -13,7 +13,11 @@ export default defineConfig(({ mode }) => {
     plugins: [
       vue(), 
       tailwindcss(),
-      ...(isLib ? [dts({ include: ['index.ts'] })] : [])
+      ...(isLib ? [dts({ 
+        include: ['index.ts', 'src/**/*.ts', 'src/**/*.vue'],
+        tsconfigPath: './tsconfig.app.json',
+        insertTypesEntry: true
+      })] : [])
     ],
     resolve: {
       alias: {
@@ -28,8 +32,8 @@ export default defineConfig(({ mode }) => {
       build: {
         lib: {
           entry: resolve(__dirname, 'index.ts'),
-          name: 'Ns8UiLibNew',
-          fileName: (format) => `ns8-ui-lib-new.${format}.js`,
+          name: 'Ns8UiLib',
+          fileName: (format) => `ns8-ui-lib.${format}.js`,
           formats: ['es', 'umd']
         },
         rollupOptions: {
