@@ -5,7 +5,7 @@
 <template>
   <div class="status-view">
     <div class="page-header">
-      <h2>{{ $t('status.title') }}</h2>
+      <h2>{{ $t("status.title") }}</h2>
     </div>
 
     <!-- Error notifications -->
@@ -41,19 +41,11 @@
         class="info-card"
       >
         <template #actions>
-          <button
-            v-if="host"
-            class="btn-ghost"
-            @click="goToWebapp"
-          >
-            {{ $t('status.open_webapp') }}
+          <button v-if="host" class="btn-ghost" @click="goToWebapp">
+            {{ $t("status.open_webapp") }}
           </button>
-          <button
-            v-else
-            class="btn-ghost"
-            @click="goToSettings"
-          >
-            {{ $t('status.configure') }}
+          <button v-else class="btn-ghost" @click="goToSettings">
+            {{ $t("status.configure") }}
           </button>
         </template>
       </NSSystemInfoCard>
@@ -89,7 +81,7 @@
 
     <!-- Services section -->
     <div class="section-header">
-      <h4>{{ $t('status.services') }}</h4>
+      <h4>{{ $t("status.services") }}</h4>
     </div>
     <div v-if="!loading.getStatus" class="cards-grid">
       <NSEmptyState
@@ -103,7 +95,7 @@
         :status="{
           running: service.active,
           enabled: service.enabled,
-          status: service.active ? 'Running' : 'Stopped'
+          status: service.active ? 'Running' : 'Stopped',
         }"
         light
         class="service-card"
@@ -121,7 +113,7 @@
 
     <!-- Images section -->
     <div class="section-header">
-      <h4>{{ $tc('status.app_images', 2) }}</h4>
+      <h4>{{ $tc("status.app_images", 2) }}</h4>
     </div>
     <div class="data-table-container">
       <NSEmptyState
@@ -134,7 +126,7 @@
         :columns="[
           { key: 'name', label: $t('status.name') },
           { key: 'size', label: $t('status.size') },
-          { key: 'created', label: $t('status.created') }
+          { key: 'created', label: $t('status.created') },
         ]"
         :loading="loading.getStatus"
         :striped="true"
@@ -143,7 +135,7 @@
 
     <!-- Volumes section -->
     <div class="section-header">
-      <h4>{{ $tc('status.app_volumes', 2) }}</h4>
+      <h4>{{ $tc("status.app_volumes", 2) }}</h4>
     </div>
     <div class="data-table-container">
       <NSEmptyState
@@ -156,7 +148,7 @@
         :columns="[
           { key: 'name', label: $t('status.name') },
           { key: 'mount', label: $t('status.mount') },
-          { key: 'created', label: $t('status.created') }
+          { key: 'created', label: $t('status.created') },
         ]"
         :loading="loading.getStatus"
         :striped="true"
@@ -166,224 +158,234 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
-import { useAppStore } from '@/store'
+import { ref, computed, onMounted } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import { useI18n } from "vue-i18n";
+import { useAppStore } from "@/store";
 import {
   NSInlineNotification,
   NSSystemInfoCard,
   NSSystemdServiceCard,
   NSBackupCard,
   NSEmptyState,
-  NSDataTable
-} from '@geniusdynamics/ns8-ui-lib'
+  NSDataTable,
+} from "@geniusdynamics/ns8-ui-lib";
 import {
   useTaskService,
   useQueryParamService,
-  usePageTitleService
-} from '@geniusdynamics/ns8-ui-lib'
+  usePageTitleService,
+} from "@geniusdynamics/ns8-ui-lib";
 
-const store = useAppStore()
-const route = useRoute()
-const router = useRouter()
-const { createModuleTaskForApp, createClusterTaskForApp, createErrorNotificationForApp } = useTaskService()
-const { getPage } = useQueryParamService()
-const { setPageTitle } = usePageTitleService()
+const store = useAppStore();
+const route = useRoute();
+const router = useRouter();
+const {
+  createModuleTaskForApp,
+  createClusterTaskForApp,
+  createErrorNotificationForApp,
+} = useTaskService();
+const { getPage } = useQueryParamService();
+const { setPageTitle } = usePageTitleService();
+const { t, tc } = useI18n();
 
 // Data
-const host = ref('')
+const host = ref("");
 const status = ref({
-  instance: '',
+  instance: "",
   services: [],
   images: [],
   volumes: [],
   node: null,
-  node_ui_name: null
-})
-const backupRepositories = ref([])
-const backups = ref([])
+  node_ui_name: null,
+});
+const backupRepositories = ref([]);
+const backups = ref([]);
 const loading = ref({
   getStatus: false,
   listBackupRepositories: false,
   listBackups: false,
-  getConfiguration: false
-})
+  getConfiguration: false,
+});
 const error = ref({
-  getStatus: '',
-  listBackupRepositories: '',
-  listBackups: '',
-  getConfiguration: ''
-})
+  getStatus: "",
+  listBackupRepositories: "",
+  listBackups: "",
+  getConfiguration: "",
+});
 
 // Computed
 const installationNodeTitle = computed(() => {
   if (status.value?.node) {
     if (status.value.node_ui_name) {
-      return status.value.node_ui_name
+      return status.value.node_ui_name;
     } else {
-      return `${$t('status.node')} ${status.value.node}`
+      return `${t("status.node")} ${status.value.node}`;
     }
   }
-  return '-'
-})
+  return "-";
+});
 
 const goToWebapp = () => {
-  window.open(`https://${host.value}`, '_blank')
-}
+  window.open(`https://${host.value}`, "_blank");
+};
 
 const goToSettings = () => {
-  router.push('/settings')
-}
+  router.push("/settings");
+};
 
 const handleBackup = (backupId: string) => {
-  console.log('Backup:', backupId)
-}
+  console.log("Backup:", backupId);
+};
 
 const handleRestore = (backupId: string) => {
-  console.log('Restore:', backupId)
-}
+  console.log("Restore:", backupId);
+};
 
 const handleDeleteBackup = (backupId: string) => {
-  console.log('Delete backup:', backupId)
-}
+  console.log("Delete backup:", backupId);
+};
 
 const handleServiceStart = (serviceName: string) => {
-  console.log('Start service:', serviceName)
-}
+  console.log("Start service:", serviceName);
+};
 
 const handleServiceStop = (serviceName: string) => {
-  console.log('Stop service:', serviceName)
-}
+  console.log("Stop service:", serviceName);
+};
 
 const handleServiceRestart = (serviceName: string) => {
-  console.log('Restart service:', serviceName)
-}
+  console.log("Restart service:", serviceName);
+};
 
 // Methods
 async function getConfiguration() {
-  loading.value.getConfiguration = true
-  error.value.getConfiguration = ''
-  
+  loading.value.getConfiguration = true;
+  error.value.getConfiguration = "";
+
   try {
-    const taskAction = 'get-configuration'
+    const taskAction = "get-configuration";
     await createModuleTaskForApp(store.instanceName, {
       action: taskAction,
       extra: {
-        title: 'Get Configuration',
-        isNotificationHidden: true
-      }
-    })
-    
+        title: "Get Configuration",
+        isNotificationHidden: true,
+      },
+    });
+
     // For demo purposes, set a sample host
-    host.value = 'example.example.org'
+    host.value = "example.example.org";
   } catch (err) {
-    console.error(`Error creating task ${taskAction}`, err)
-    error.value.getConfiguration = 'Failed to retrieve configuration'
-    createErrorNotificationForApp(err, 'Failed to get configuration')
+    console.error(`Error creating task ${taskAction}`, err);
+    error.value.getConfiguration = "Failed to retrieve configuration";
+    createErrorNotificationForApp(err, "Failed to get configuration");
   } finally {
-    loading.value.getConfiguration = false
+    loading.value.getConfiguration = false;
   }
 }
 
 async function getStatus() {
-  loading.value.getStatus = true
-  error.value.getStatus = ''
-  
+  loading.value.getStatus = true;
+  error.value.getStatus = "";
+
   try {
-    const taskAction = 'get-status'
+    const taskAction = "get-status";
     await createModuleTaskForApp(store.instanceName, {
       action: taskAction,
       extra: {
-        title: 'Get Status',
-        isNotificationHidden: true
-      }
-    })
-    
+        title: "Get Status",
+        isNotificationHidden: true,
+      },
+    });
+
     // For demo purposes, set sample data
     status.value = {
       instance: store.instanceName,
       services: [
-        { name: 'example-app', active: true, enabled: true },
-        { name: 'example-db', active: true, enabled: true }
+        { name: "example-app", active: true, enabled: true },
+        { name: "example-db", active: true, enabled: true },
       ],
       images: [
-        { name: 'example:latest', size: '150 MB', created: '2024-01-15' },
-        { name: 'postgres:14', size: '350 MB', created: '2024-01-10' }
+        { name: "example:latest", size: "150 MB", created: "2024-01-15" },
+        { name: "postgres:14", size: "350 MB", created: "2024-01-10" },
       ],
       volumes: [
-        { name: 'example-data', mount: '/var/lib/example', created: '2024-01-15' }
+        {
+          name: "example-data",
+          mount: "/var/lib/example",
+          created: "2024-01-15",
+        },
       ],
       node: 1,
-      node_ui_name: 'Node 1'
-    }
+      node_ui_name: "Node 1",
+    };
   } catch (err) {
-    console.error(`Error creating task ${taskAction}`, err)
-    error.value.getStatus = 'Failed to retrieve status'
-    createErrorNotificationForApp(err, 'Failed to get status')
+    console.error(`Error creating task ${taskAction}`, err);
+    error.value.getStatus = "Failed to retrieve status";
+    createErrorNotificationForApp(err, "Failed to get status");
   } finally {
-    loading.value.getStatus = false
+    loading.value.getStatus = false;
   }
 }
 
 async function listBackupRepositories() {
-  loading.value.listBackupRepositories = true
-  error.value.listBackupRepositories = ''
-  
+  loading.value.listBackupRepositories = true;
+  error.value.listBackupRepositories = "";
+
   try {
     await createClusterTaskForApp({
-      action: 'list-backup-repositories',
+      action: "list-backup-repositories",
       extra: {
-        title: 'List Backup Repositories',
-        isNotificationHidden: true
-      }
-    })
+        title: "List Backup Repositories",
+        isNotificationHidden: true,
+      },
+    });
   } catch (err) {
-    console.error('Error listing backup repositories', err)
-    error.value.listBackupRepositories = 'Failed to list backup repositories'
+    console.error("Error listing backup repositories", err);
+    error.value.listBackupRepositories = "Failed to list backup repositories";
   } finally {
-    loading.value.listBackupRepositories = false
+    loading.value.listBackupRepositories = false;
   }
 }
 
 async function listBackups() {
-  loading.value.listBackups = true
-  error.value.listBackups = ''
-  
+  loading.value.listBackups = true;
+  error.value.listBackups = "";
+
   try {
     await createClusterTaskForApp({
-      action: 'list-backups',
+      action: "list-backups",
       extra: {
-        title: 'List Backups',
-        isNotificationHidden: true
-      }
-    })
-    
+        title: "List Backups",
+        isNotificationHidden: true,
+      },
+    });
+
     // For demo purposes, set sample backup data
     backups.value = [
       {
-        id: 'backup-1',
-        name: 'Daily Backup',
-        date: '2024-01-15 02:00',
-        size: '2.3 GB',
+        id: "backup-1",
+        name: "Daily Backup",
+        date: "2024-01-15 02:00",
+        size: "2.3 GB",
         enabled: true,
-        status: 'success'
-      }
-    ]
+        status: "success",
+      },
+    ];
   } catch (err) {
-    console.error('Error listing backups', err)
-    error.value.listBackups = 'Failed to list backups'
+    console.error("Error listing backups", err);
+    error.value.listBackups = "Failed to list backups";
   } finally {
-    loading.value.listBackups = false
+    loading.value.listBackups = false;
   }
 }
 
 onMounted(async () => {
-  setPageTitle(`${$t('status.title')} - ${store.appName}`)
-  await getConfiguration()
-  await getStatus()
-  await listBackupRepositories()
-  await listBackups()
-})
+  setPageTitle(`${t("status.title")} - ${store.appName}`);
+  await getConfiguration();
+  await getStatus();
+  await listBackupRepositories();
+  await listBackups();
+});
 </script>
 
 <style scoped>
@@ -482,7 +484,8 @@ onMounted(async () => {
 }
 
 @keyframes pulse {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
   }
   50% {
