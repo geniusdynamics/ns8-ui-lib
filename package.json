@@ -1,6 +1,6 @@
 {
   "name": "@geniusdynamics/ns8-ui-lib",
-  "version": "1.0.0",
+  "version": "1.0.4",
   "description": "Vue 3 library for NethServer 8 UI with TailwindCSS and Shadcn Vue",
   "keywords": [
     "nethserver",

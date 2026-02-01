@@ -12,6 +12,14 @@ npm install @geniusdynamics/ns8-ui-lib
 yarn add @geniusdynamics/ns8-ui-lib
 ```
 
+## CSS Import
+
+Import the library CSS in your main entry file (e.g., `main.ts` or `main.js`):
+
+```typescript
+import '@geniusdynamics/ns8-ui-lib/dist/style.css'
+```
+
 ## Features
 
 - **Vue 3** - Composition API with TypeScript support
@@ -138,24 +146,6 @@ pnpm build-lib
 
 # Type check
 pnpm type-check
-```
-
-## Publishing
-
-To publish the package to npm:
-
-```bash
-# 1. Build the library
-pnpm build-lib
-
-# 2. Update version in package.json
-# Edit version field
-
-# 3. Login to npm (if not already logged in)
-npm login
-
-# 4. Publish
-npm publish --access public
 ```
 
 ## License

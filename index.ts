@@ -3,6 +3,9 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
+// Import library styles (Tailwind CSS)
+import "./src/style.css";
+
 // NS Components
 export {
   NSBackupCard,
