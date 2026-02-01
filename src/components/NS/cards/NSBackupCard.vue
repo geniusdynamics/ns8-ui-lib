@@ -1,111 +1,130 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-import { Save, AlertCircle, CheckCircle, Loader2, MoreHorizontal } from 'lucide-vue-next'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Skeleton } from '@/components/ui/skeleton'
-import { cn } from '@/lib/utils'
+import { computed } from "vue";
+import {
+  Save,
+  AlertCircle,
+  CheckCircle,
+  Loader2,
+  MoreHorizontal,
+} from "lucide-vue-next";
+import { Button } from "@/components/ui/button";
+
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
+import { cn } from "@/lib/utils";
 
 interface Backup {
-  id: string
-  name: string
-  date: string
-  size: string
-  enabled: boolean
-  status?: 'success' | 'error' | 'running' | 'pending'
+  id: string;
+  name: string;
+  date: string;
+  size: string;
+  enabled: boolean;
+  status?: "success" | "error" | "running" | "pending";
 }
 
 interface Status {
   [key: string]: {
-    success?: boolean
-    message?: string
-  }
+    success?: boolean;
+    message?: string;
+  };
 }
 
 interface Props {
-  title?: string
-  loading?: boolean
-  backups?: Backup[]
-  status?: Status
-  noBackupMessage?: string
-  statusLabel?: string
-  statusSuccessLabel?: string
-  backupDisabledLabel?: string
-  light?: boolean
-  maxHeight?: string
-  class?: string
+  title?: string;
+  loading?: boolean;
+  backups?: Backup[];
+  status?: Status;
+  noBackupMessage?: string;
+  statusLabel?: string;
+  statusSuccessLabel?: string;
+  backupDisabledLabel?: string;
+  light?: boolean;
+  maxHeight?: string;
+  class?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  title: 'Backup',
+  title: "Backup",
   loading: false,
   backups: () => [],
   status: () => ({}),
-  noBackupMessage: 'No backups available',
-  statusLabel: 'Status',
-  statusSuccessLabel: 'Enabled',
-  backupDisabledLabel: 'Disabled',
+  noBackupMessage: "No backups available",
+  statusLabel: "Status",
+  statusSuccessLabel: "Enabled",
+  backupDisabledLabel: "Disabled",
   light: false,
-})
+});
 
 const emit = defineEmits<{
-  backup: [backupId: string]
-  restore: [backupId: string]
-  delete: [backupId: string]
-  enable: [backupId: string]
-  disable: [backupId: string]
-}>()
+  backup: [backupId: string];
+  restore: [backupId: string];
+  delete: [backupId: string];
+  enable: [backupId: string];
+  disable: [backupId: string];
+}>();
 
-const hasBackups = computed(() => props.backups.length > 0)
-const backupsContainingInstance = computed(() => props.backups.filter(backup => backup.enabled))
-const singleBackup = computed(() => backupsContainingInstance.value.length === 1 ? backupsContainingInstance.value[0] : null)
+const hasBackups = computed(() => props.backups.length > 0);
+const backupsContainingInstance = computed(() =>
+  props.backups.filter((backup) => backup.enabled),
+);
+const singleBackup = computed(() =>
+  backupsContainingInstance.value.length === 1
+    ? backupsContainingInstance.value[0]
+    : null,
+);
 
 const getStatusIcon = (backup: Backup) => {
   switch (backup.status) {
-    case 'success':
-      return CheckCircle
-    case 'error':
-      return AlertCircle
-    case 'running':
-      return Loader2
+    case "success":
+      return CheckCircle;
+    case "error":
+      return AlertCircle;
+    case "running":
+      return Loader2;
     default:
-      return null
+      return null;
   }
-}
+};
 
 const getStatusClass = (backup: Backup) => {
   switch (backup.status) {
-    case 'success':
-      return 'text-green-600'
-    case 'error':
-      return 'text-destructive'
-    case 'running':
-      return 'text-blue-600'
+    case "success":
+      return "text-green-600";
+    case "error":
+      return "text-destructive";
+    case "running":
+      return "text-blue-600";
     default:
-      return 'text-muted-foreground'
+      return "text-muted-foreground";
   }
-}
+};
 
 const containerClasses = computed(() => {
-  return cn('w-full', props.class)
-})
+  return cn("w-full", props.class);
+});
 
 const cardClasses = computed(() => {
   return cn(
-    'transition-all duration-200 hover:shadow-md',
-    props.light ? 'bg-background/95' : 'bg-background'
-  )
-})
+    "transition-all duration-200 hover:shadow-md",
+    props.light ? "bg-background/95" : "bg-background",
+  );
+});
 
 const tableWrapperClasses = computed(() => {
-  return cn('w-full overflow-auto', {
-    'max-h-64': props.maxHeight
-  })
-})
+  return cn("w-full overflow-auto", {
+    "max-h-64": props.maxHeight,
+  });
+});
 
 const tableClasses = computed(() => {
-  return 'w-full min-w-[300px]'
-})
+  return "w-full min-w-[300px]";
+});
 </script>
 
 <template>
@@ -125,7 +144,10 @@ const tableClasses = computed(() => {
       </div>
 
       <!-- No backups state -->
-      <div v-else-if="!hasBackups" class="flex items-center gap-3 text-muted-foreground">
+      <div
+        v-else-if="!hasBackups"
+        class="flex items-center gap-3 text-muted-foreground"
+      >
         <AlertCircle class="h-5 w-5" />
         <span>{{ noBackupMessage }}</span>
       </div>
@@ -138,10 +160,7 @@ const tableClasses = computed(() => {
             <div class="flex items-center justify-between py-2 border-b">
               <span class="text-sm font-medium">{{ statusLabel }}</span>
               <div class="flex items-center gap-2">
-                <span
-                  v-if="!singleBackup.enabled"
-                  class="text-destructive"
-                >
+                <span v-if="!singleBackup.enabled" class="text-destructive">
                   {{ backupDisabledLabel }}
                 </span>
                 <span
@@ -231,7 +250,7 @@ const tableClasses = computed(() => {
                       :class="cn('h-4 w-4', getStatusClass(backup))"
                     />
                     <span :class="getStatusClass(backup)">
-                      {{ backup.status || 'Unknown' }}
+                      {{ backup.status || "Unknown" }}
                     </span>
                   </div>
                 </td>
