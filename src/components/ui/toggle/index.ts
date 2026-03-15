@@ -1,65 +1,28 @@
 import type { VariantProps } from "class-variance-authority"
 import { cva } from "class-variance-authority"
 
-export { default as NsToggle } from "./NsToggle.vue"
+export { default as Toggle } from "./Toggle.vue"
 
 export const toggleVariants = cva(
-  "peer inline-flex h-6 w-11 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=unchecked]:bg-input",
+  "inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium hover:bg-muted hover:text-muted-foreground disabled:pointer-events-none disabled:opacity-50 data-[state=on]:bg-accent data-[state=on]:text-accent-foreground [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 [&_svg]:shrink-0 focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] outline-none transition-[color,box-shadow] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive whitespace-nowrap",
   {
     variants: {
       variant: {
-        default: "data-[state=checked]:bg-primary data-[state=unchecked]:bg-input",
-        destructive: "data-[state=checked]:bg-destructive data-[state=unchecked]:bg-input",
-        success: "data-[state=checked]:bg-green-500 data-[state=unchecked]:bg-input",
-        warning: "data-[state=checked]:bg-orange-500 data-[state=unchecked]:bg-input",
+        default: "bg-transparent",
+        outline:
+          "border border-input bg-transparent shadow-xs hover:bg-accent hover:text-accent-foreground",
       },
       size: {
-        default: "h-6 w-11",
-        sm: "h-5 w-9",
-        lg: "h-7 w-13",
+        default: "h-9 px-2 min-w-9",
+        sm: "h-8 px-1.5 min-w-8",
+        lg: "h-10 px-2.5 min-w-10",
       },
     },
     defaultVariants: {
       variant: "default",
       size: "default",
-    },
-  },
-)
-
-export const toggleThumbVariants = cva(
-  "pointer-events-none block rounded-full bg-background shadow-lg ring-0 transition-transform data-[state=checked]:translate-x-5 data-[state=unchecked]:translate-x-0",
-  {
-    variants: {
-      size: {
-        default: "h-5 w-5 data-[state=checked]:translate-x-5",
-        sm: "h-4 w-4 data-[state=checked]:translate-x-4",
-        lg: "h-6 w-6 data-[state=checked]:translate-x-6",
-      },
-    },
-    defaultVariants: {
-      size: "default",
-    },
-  },
-)
-
-export const labelVariants = cva(
-  "text-sm font-medium",
-  {
-    variants: {
-      variant: {
-        default: "text-foreground",
-        destructive: "text-destructive",
-        success: "text-green-600",
-        warning: "text-orange-600",
-        muted: "text-muted-foreground",
-      },
-    },
-    defaultVariants: {
-      variant: "default",
     },
   },
 )
 
 export type ToggleVariants = VariantProps<typeof toggleVariants>
-export type ToggleThumbVariants = VariantProps<typeof toggleThumbVariants>
-export type LabelVariants = VariantProps<typeof labelVariants>
