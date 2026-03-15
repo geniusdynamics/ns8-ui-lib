@@ -1,6 +1,7 @@
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import tailwindcss from "@tailwindcss/vite";
+import dts from "vite-plugin-dts";
 import path from "node:path";
 import { resolve } from 'node:path';
 
@@ -11,14 +12,14 @@ export default defineConfig(({ mode }) => {
   const baseConfig = {
     plugins: [
       vue(), 
-      tailwindcss()
-      // dts generation disabled - uncomment to enable .d.ts generation
-      // ...(isLib ? [dts({ 
-      //   include: ['index.ts', 'src/**/*.ts', 'src/**/*.vue'],
-      //   tsconfigPath: './tsconfig.app.json',
-      //   insertTypesEntry: true,
-      //   rollupTypes: false
-      // })] : [])
+      tailwindcss(),
+      ...(isLib ? [dts({ 
+        include: ['index.ts', 'src/components/NS', 'src/composables', 'src/types'],
+        exclude: ['src/components/ui/**'],
+        tsconfigPath: './tsconfig.app.json',
+        insertTypesEntry: true,
+        rollupTypes: false
+      })] : [])
     ],
     resolve: {
       alias: {
