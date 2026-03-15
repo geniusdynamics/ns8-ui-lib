@@ -110,8 +110,7 @@ const positionClasses = computed(() => {
         <button
           v-if="actionLabel"
           type="button"
-          :class="cn(
-            'inline-flex items-center text-sm font-medium underline underline-offset-2 hover:no-underline',
+          :class="cn( 'inline-flex items-center text-sm font-medium underline underline-offset-2 hover:no-underline',
             {
               'text-destructive-foreground': variant === 'destructive',
               'text-white': ['warning', 'success', 'info'].includes(variant),
@@ -129,8 +128,7 @@ const positionClasses = computed(() => {
         v-if="showCloseButton"
         type="button"
         :aria-label="closeAriaLabel"
-        :class="cn(
-          'absolute right-2 top-2 rounded-md p-1 text-foreground/50 opacity-0 transition-opacity hover:text-foreground focus:opacity-100 focus:outline-none focus:ring-2 group-hover:opacity-100',
+        :class="cn( 'absolute right-2 top-2 rounded-md p-1 text-foreground/50 opacity-0 transition-opacity hover:text-foreground focus:opacity-100 focus:outline-none focus:ring-2 group-hover:opacity-100',
           {
             'text-destructive-foreground/50 hover:text-destructive-foreground': variant === 'destructive',
             'text-white/50 hover:text-white': ['warning', 'success', 'info'].includes(variant)

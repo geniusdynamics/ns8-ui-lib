@@ -290,8 +290,7 @@ watch(() => props.currentPage, () => {
             <TableHead
               v-for="column in columns"
               :key="column.key"
-              :class="cn(
-                'relative',
+              :class="cn( 'relative',
                 {
                   'text-left': column.align === 'left' || !column.align,
                   'text-center': column.align === 'center',
@@ -306,14 +305,12 @@ watch(() => props.currentPage, () => {
                 {{ column.label }}
                 <div v-if="column.sortable" class="flex flex-col">
                   <ChevronUp 
-                    :class="cn(
-                      'h-3 w-3',
+                    :class="cn( 'h-3 w-3',
                       sortColumn === column.key && sortDirection === 'asc' ? 'text-primary' : 'text-muted-foreground'
                     )" 
                   />
                   <ChevronDown 
-                    :class="cn(
-                      'h-3 w-3 -mt-1',
+                    :class="cn( 'h-3 w-3 -mt-1',
                       sortColumn === column.key && sortDirection === 'desc' ? 'text-primary' : 'text-muted-foreground'
                     )" 
                   />
@@ -351,8 +348,7 @@ watch(() => props.currentPage, () => {
             v-else
             v-for="(row, index) in currentPageData"
             :key="`row-${index}`"
-            :class="{
-              'selected': selectedRows.includes(row)
+            :class="{ 'selected': selectedRows.includes(row)
             }"
             @click="handleRowClick(row, index)"
             class="cursor-pointer"
@@ -371,9 +367,7 @@ watch(() => props.currentPage, () => {
             <TableCell
               v-for="column in columns"
               :key="column.key"
-              :class="cn(
-                {
-                  'text-left': column.align === 'left' || !column.align,
+              :class="cn( { 'text-left': column.align === 'left' || !column.align,
                   'text-center': column.align === 'center',
                   'text-right': column.align === 'right'
                 }

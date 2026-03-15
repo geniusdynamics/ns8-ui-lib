@@ -129,8 +129,7 @@ defineExpose({
     <label
       v-if="label || $slots.label"
       :for="inputId"
-      :class="cn(
-        'text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70',
+      :class="cn( 'text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70',
         {
           'text-destructive': errorMessage,
           'text-orange-600': warningMessage,
@@ -145,8 +144,7 @@ defineExpose({
     <div class="relative">
       <span
         v-if="prefix"
-        :class="cn(
-          'absolute left-3 top-1/2 transform -translate-y-1/2 text-sm text-muted-foreground',
+        :class="cn( 'absolute left-3 top-1/2 transform -translate-y-1/2 text-sm text-muted-foreground',
           {
             'text-destructive': errorMessage,
             'text-orange-600': warningMessage,
@@ -161,8 +159,7 @@ defineExpose({
         :id="inputId"
         ref="inputRef"
         :type="actualType"
-        :class="cn(
-          'flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50',
+        :class="cn( 'flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50',
           {
             'pl-8': prefix,
             'pr-16': (isPassword && showPasswordToggle) || StatusIcon,
@@ -204,8 +201,7 @@ defineExpose({
         <button
           v-if="isPassword && showPasswordToggle"
           type="button"
-          :class="cn(
-            'text-muted-foreground hover:text-foreground transition-colors',
+          :class="cn( 'text-muted-foreground hover:text-foreground transition-colors',
             {
               'pointer-events-none': disabled
             }

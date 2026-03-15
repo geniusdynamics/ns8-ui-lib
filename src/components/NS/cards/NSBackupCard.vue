@@ -157,7 +157,9 @@ const tableClasses = computed(() => {
         <div :class="tableWrapperClasses">
           <div :class="tableClasses">
             <!-- Status row -->
-            <div class="flex items-center justify-between py-2 border-b">
+            <div
+              class="flex items-center justify-between py-2 border-b"
+            >
               <span class="text-sm font-medium">{{ statusLabel }}</span>
               <div class="flex items-center gap-2">
                 <span v-if="!singleBackup.enabled" class="text-destructive">
@@ -182,7 +184,9 @@ const tableClasses = computed(() => {
             <div class="space-y-2 py-2">
               <div class="flex justify-between">
                 <span class="text-sm text-muted-foreground">Name:</span>
-                <span class="text-sm font-medium">{{ singleBackup.name }}</span>
+                <span class="text-sm font-medium">{{
+                  singleBackup.name
+                }}</span>
               </div>
               <div class="flex justify-between">
                 <span class="text-sm text-muted-foreground">Date:</span>
@@ -230,15 +234,29 @@ const tableClasses = computed(() => {
           <table :class="tableClasses">
             <thead>
               <tr class="border-b">
-                <th class="text-left p-2 text-sm font-medium">Name</th>
-                <th class="text-left p-2 text-sm font-medium">Date</th>
-                <th class="text-left p-2 text-sm font-medium">Size</th>
-                <th class="text-left p-2 text-sm font-medium">Status</th>
-                <th class="text-right p-2 text-sm font-medium">Actions</th>
+                <th class="text-left p-2 text-sm font-medium">
+                  Name
+                </th>
+                <th class="text-left p-2 text-sm font-medium">
+                  Date
+                </th>
+                <th class="text-left p-2 text-sm font-medium">
+                  Size
+                </th>
+                <th class="text-left p-2 text-sm font-medium">
+                  Status
+                </th>
+                <th class="text-right p-2 text-sm font-medium">
+                  Actions
+                </th>
               </tr>
             </thead>
             <tbody>
-              <tr v-for="backup in backups" :key="backup.id" class="border-b">
+              <tr
+                v-for="backup in backups"
+                :key="backup.id"
+                class="border-b"
+              >
                 <td class="p-2 text-sm">{{ backup.name }}</td>
                 <td class="p-2 text-sm">{{ backup.date }}</td>
                 <td class="p-2 text-sm">{{ backup.size }}</td>

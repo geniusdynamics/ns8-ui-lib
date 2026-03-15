@@ -121,8 +121,7 @@ const handleKeydown = (event: KeyboardEvent) => {
     <button
       v-if="isFilter"
       type="button"
-      :class="cn(
-        'flex items-center justify-center rounded-full hover:bg-black/10 dark:hover:bg-white/10 transition-colors',
+      :class="cn( 'flex items-center justify-center rounded-full hover:bg-black/10 dark:hover:bg-white/10 transition-colors',
         'ml-1 -mr-1 h-4 w-4 p-0',
         {
           'opacity-50 cursor-not-allowed': disabled,

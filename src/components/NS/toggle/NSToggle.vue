@@ -98,8 +98,7 @@ const thumbClasses = computed(() => {
       <label
         v-if="label || $slots.label"
         :for="toggleId"
-        :class="cn(
-          'text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer',
+        :class="cn( 'text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer',
           {
             'sr-only': hideLabel,
             'cursor-not-allowed': disabled,
@@ -115,8 +114,7 @@ const thumbClasses = computed(() => {
 
       <div
         v-if="!hideLabel && (leftText || rightText || $slots['left-text'] || $slots['right-text'])"
-        :class="cn(
-          'flex items-center gap-2 text-xs font-medium',
+        :class="cn( 'flex items-center gap-2 text-xs font-medium',
           {
             'text-muted-foreground': !isChecked,
             'text-primary': isChecked,
@@ -130,8 +128,7 @@ const thumbClasses = computed(() => {
           <slot name="left-text">{{ leftText }}</slot>
         </span>
         
-        <div :class="cn(
-          'w-8 h-px bg-current',
+        <div :class="cn( 'w-8 h-px bg-current',
           {
             'opacity-20': !isChecked,
             'opacity-100': isChecked

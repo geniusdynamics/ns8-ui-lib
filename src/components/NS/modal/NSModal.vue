@@ -121,8 +121,7 @@ const handleClose = () => {
       <!-- Header -->
       <div 
         v-if="title || $slots.header || showCloseButton" 
-        :class="cn(
-          'flex items-center justify-between',
+        :class="cn( 'flex items-center justify-between',
           isFullscreen ? 'border-b p-6' : 'mb-4'
         )"
       >
@@ -181,8 +180,7 @@ const handleClose = () => {
       <!-- Default actions -->
       <div 
         v-if="$slots.actions" 
-        :class="cn(
-          'flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2',
+        :class="cn( 'flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2',
           isFullscreen ? 'border-t p-6 mt-auto' : 'mt-6'
         )"
       >

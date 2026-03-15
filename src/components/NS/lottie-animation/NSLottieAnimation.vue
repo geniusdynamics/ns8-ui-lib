@@ -1,29 +1,29 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
-import LottieAnimation from 'lottie-web-vue'
-import { cn } from '@/lib/utils'
+import { computed, ref, watch } from "vue";
+import { LottieAnimation } from "lottie-web-vue";
+import { cn } from "@/lib/utils";
 
 interface Props {
-  path?: string // Path to Lottie JSON file
-  animationData?: any // Direct animation data
-  width?: number | string
-  height?: number | string
-  loop?: boolean
-  autoplay?: boolean
-  speed?: number
-  playOnHover?: boolean
-  stopOnHoverOut?: boolean
-  direction?: number
-  renderer?: 'svg' | 'canvas' | 'html'
-  className?: string
-  containerClassName?: string
-  lazy?: boolean
-  placeholder?: string
-  responsive?: boolean
-  preserveAspectRatio?: string
-  title?: string
-  ariaLabel?: string
-  role?: string
+  path?: string; // Path to Lottie JSON file
+  animationData?: any; // Direct animation data
+  width?: number | string;
+  height?: number | string;
+  loop?: boolean;
+  autoplay?: boolean;
+  speed?: number;
+  playOnHover?: boolean;
+  stopOnHoverOut?: boolean;
+  direction?: number;
+  renderer?: "svg" | "canvas" | "html";
+  className?: string;
+  containerClassName?: string;
+  lazy?: boolean;
+  placeholder?: string;
+  responsive?: boolean;
+  preserveAspectRatio?: string;
+  title?: string;
+  ariaLabel?: string;
+  role?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -35,34 +35,34 @@ const props = withDefaults(defineProps<Props>(), {
   playOnHover: false,
   stopOnHoverOut: false,
   direction: 1,
-  renderer: 'svg',
+  renderer: "svg",
   lazy: false,
   responsive: true,
-  preserveAspectRatio: 'xMidYMid meet',
-  role: 'img',
-})
+  preserveAspectRatio: "xMidYMid meet",
+  role: "img",
+});
 
 const emit = defineEmits<{
-  load: []
-  ready: []
-  play: []
-  pause: []
-  stop: []
-  complete: []
-  loopComplete: []
-  enterFrame: [event: any]
-  error: [error: Error]
-  mouseOver: []
-  mouseOut: []
-}>()
+  load: [];
+  ready: [];
+  play: [];
+  pause: [];
+  stop: [];
+  complete: [];
+  loopComplete: [];
+  enterFrame: [event: any];
+  error: [error: Error];
+  mouseOver: [];
+  mouseOut: [];
+}>();
 
 // State
-const isLoading = ref(false)
-const isError = ref(false)
-const isLoaded = ref(false)
-const isPlaying = ref(props.autoplay)
-const error = ref<string | null>(null)
-const lottieRef = ref<InstanceType<typeof LottieAnimation>>()
+const isLoading = ref(false);
+const isError = ref(false);
+const isLoaded = ref(false);
+const isPlaying = ref(props.autoplay);
+const error = ref<string | null>(null);
+const lottieRef = ref<InstanceType<typeof LottieAnimation>>();
 
 // Computed properties
 const lottieOptions = computed(() => ({
@@ -74,131 +74,145 @@ const lottieOptions = computed(() => ({
   rendererSettings: {
     preserveAspectRatio: props.preserveAspectRatio,
   },
-}))
+}));
 
 const containerStyle = computed(() => ({
-  width: props.width ? (typeof props.width === 'number' ? `${props.width}px` : props.width) : 'auto',
-  height: props.height ? (typeof props.height === 'number' ? `${props.height}px` : props.height) : 'auto',
-  maxWidth: props.responsive ? '100%' : undefined,
-}))
+  width: props.width
+    ? typeof props.width === "number"
+      ? `${props.width}px`
+      : props.width
+    : "auto",
+  height: props.height
+    ? typeof props.height === "number"
+      ? `${props.height}px`
+      : props.height
+    : "auto",
+  maxWidth: props.responsive ? "100%" : undefined,
+}));
 
 const containerClasses = computed(() => {
   return cn(
-    'relative inline-block',
+    "relative inline-block",
     {
-      'opacity-50': isLoading.value,
-      'opacity-100': !isLoading.value,
+      "opacity-50": isLoading.value,
+      "opacity-100": !isLoading.value,
     },
-    props.containerClassName
-  )
-})
+    props.containerClassName,
+  );
+});
 
 const playerClasses = computed(() => {
-  return cn('w-full h-full', props.className)
-})
+  return cn("w-full h-full", props.className);
+});
 
 // Player controls
 const play = () => {
   if (lottieRef.value && !isPlaying.value) {
-    lottieRef.value.play()
-    isPlaying.value = true
-    emit('play')
+    lottieRef.value.play();
+    isPlaying.value = true;
+    emit("play");
   }
-}
+};
 
 const pause = () => {
   if (lottieRef.value && isPlaying.value) {
-    lottieRef.value.pause()
-    isPlaying.value = false
-    emit('pause')
+    lottieRef.value.pause();
+    isPlaying.value = false;
+    emit("pause");
   }
-}
+};
 
 const stop = () => {
   if (lottieRef.value) {
-    lottieRef.value.stop()
-    isPlaying.value = false
-    emit('stop')
+    lottieRef.value.stop();
+    isPlaying.value = false;
+    emit("stop");
   }
-}
+};
 
 const goToAndStop = (frame?: number) => {
   if (lottieRef.value) {
-    lottieRef.value.goToAndStop(frame || 0, true)
+    lottieRef.value.goToAndStop(frame || 0, true);
   }
-}
+};
 
 const setDirection = (direction: number) => {
   if (lottieRef.value) {
-    lottieRef.value.setDirection(direction)
+    lottieRef.value.setDirection(direction);
   }
-}
+};
 
 const setSpeed = (speed: number) => {
   if (lottieRef.value) {
-    lottieRef.value.setSpeed(speed)
+    lottieRef.value.setSpeed(speed);
   }
-}
+};
 
 // Event handlers
 const handleDataReady = () => {
-  isLoaded.value = true
-  isLoading.value = false
-  emit('ready')
-}
+  isLoaded.value = true;
+  isLoading.value = false;
+  emit("ready");
+};
 
 const handleDataFailed = () => {
-  isLoading.value = false
-  isError.value = true
-  error.value = 'Failed to load animation'
-  emit('error', new Error('Animation data failed to load'))
-}
+  isLoading.value = false;
+  isError.value = true;
+  error.value = "Failed to load animation";
+  emit("error", new Error("Animation data failed to load"));
+};
 
 const handleDOMLoaded = () => {
-  emit('load')
-}
+  emit("load");
+};
 
 const handleComplete = () => {
-  emit('complete')
-}
+  emit("complete");
+};
 
 const handleLoopComplete = () => {
-  emit('loopComplete')
-}
+  emit("loopComplete");
+};
 
 const handleEnterFrame = (event: any) => {
-  emit('enterFrame', event)
-}
+  emit("enterFrame", event);
+};
 
 // Hover handlers
 const handleMouseOver = () => {
   if (props.playOnHover && !isPlaying.value) {
-    play()
+    play();
   }
-  emit('mouseOver')
-}
+  emit("mouseOver");
+};
 
 const handleMouseOut = () => {
   if (props.stopOnHoverOut && isPlaying.value) {
-    pause()
+    pause();
   }
-  emit('mouseOut')
-}
+  emit("mouseOut");
+};
 
 // Watch for prop changes
 watch([() => props.path, () => props.animationData], () => {
-  isLoading.value = true
-  isLoaded.value = false
-  isError.value = false
-})
+  isLoading.value = true;
+  isLoaded.value = false;
+  isError.value = false;
+});
 
-watch(() => props.speed, (newSpeed) => {
-  setSpeed(newSpeed)
-})
+watch(
+  () => props.speed,
+  (newSpeed) => {
+    setSpeed(newSpeed);
+  },
+);
 
-watch(() => props.direction, (newDirection) => {
-  setDirection(newDirection)
-})
+watch(
+  () => props.direction,
+  (newDirection) => {
+    setDirection(newDirection);
+  },
+);
 
 // Expose methods
 defineExpose({
@@ -212,11 +226,11 @@ defineExpose({
   isPlaying,
   isLoading,
   isError,
-})
+});
 </script>
 
 <template>
-  <div 
+  <div
     :class="containerClasses"
     :style="containerStyle"
     :title="title"
@@ -226,14 +240,24 @@ defineExpose({
     @mouseout="handleMouseOut"
   >
     <!-- Loading placeholder -->
-    <div v-if="isLoading && !isLoaded" class="flex items-center justify-center h-full">
-      <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
-      <span v-if="placeholder" class="ml-2 text-sm text-muted-foreground">{{ placeholder }}</span>
+    <div
+      v-if="isLoading && !isLoaded"
+      class="flex items-center justify-center h-full"
+    >
+      <div
+        class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"
+      ></div>
+      <span v-if="placeholder" class="ml-2 text-sm text-muted-foreground">{{
+        placeholder
+      }}</span>
     </div>
 
     <!-- Error state -->
-    <div v-else-if="isError" class="flex items-center justify-center h-full text-destructive">
-      <div class="text-sm">{{ error || 'Failed to load animation' }}</div>
+    <div
+      v-else-if="isError"
+      class="flex items-center justify-center h-full text-destructive"
+    >
+      <div class="text-sm">{{ error || "Failed to load animation" }}</div>
     </div>
 
     <!-- Lottie Animation -->
